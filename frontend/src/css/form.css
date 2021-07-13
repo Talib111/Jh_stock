@@ -1,0 +1,38 @@
+.input_spacing{
+    height: "20px";
+    width: 100%;
+    margin-top: 10px !important;
+    
+}
+.add_money_form{
+      padding: 10px 100px 10px 100px !important;  
+}
+.add_money_form input{
+    margin-top: 10px !important;
+}
+.activate_client_form{
+    padding: 20px 10px 20px 10px !important;
+}
+.form_error{
+    color: red;
+    
+}
+@media(min-width: 0px) and (max-width: 600px){
+    .personal_info_form_container input{
+        margin-top: 15px;
+    }
+    .input_spacing{
+        height: "0px";
+        width: 100%
+        
+    }
+    .add_money_form{
+        padding: 10px 20px 10px 20px !important; 
+    }
+    .add_money_form input{
+        margin-top: 10px !important;
+    }
+    .activate_client_form{
+        padding: 20px 10px 20px 10px !important;
+    }
+}

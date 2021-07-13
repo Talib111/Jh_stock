@@ -1,0 +1,12 @@
+.stock_round,.date_round{
+    border-radius: 50%;
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+    border: 1px solid white;
+    box-shadow: -2px 2px 4px grey;
+}
+.date_round{
+    font-size: 17px;
+    font-weight: 500;
+}
