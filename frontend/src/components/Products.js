@@ -1,11 +1,12 @@
 import React from 'react'
 import '../css/products.css'
 
-function Products() {
+function Products(props) {
     return (
         <>
-            <div className="product_card bg-danger">
-                <h4 className="bg-primary px-3">Breno Nectar</h4>
+            <div className="product_card">
+                <div className="num">1</div>
+                <h4 className="px-3 bg-info" style={{"backgroundColor": "yellow",color: "white"}}>{props.name}</h4>
                 <div className="qty bg-info">50</div>
             </div>
         </>

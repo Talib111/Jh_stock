@@ -2,15 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useFormik, Formik } from "formik";
 import * as Yup from "yup";
 import "../css/form.css";
+import { string } from "yup/lib/locale";
 // //for redux
 // import { connect } from "react-redux";
 
 function Form(props) {
   const [item_no, setitemno] = useState([1]);
   //product array
-  const [select_pro_input, setSelect_pro_input] = useState([""]);
+  const [select_pro_input, setSelect_pro_input] = useState([]);
   //value array
-  const [select_val_input, setSelect_val_input] = useState([""]);
+  const [select_val_input, setSelect_val_input] = useState([]);
   //final json variable
   const [final_json, setfinal_json] = useState({});
  const [image,setImage] = useState(null);
@@ -23,7 +24,10 @@ const [update_json, setupdate_json] = useState({});
 
 useEffect(() => {
   if(merge_complete>=1){
-  console.log("final array ",pr_obj);
+  console.log("final array ",final_json);
+ 
+  // console.log("item no ",item_no)
+  // alert(final_json);
 
   }
   // console.log(pr_obj.Tulsi_2);
@@ -36,7 +40,7 @@ useEffect(() => {
   const add_item = () => {
     // item_no.map for total no of inputs
     var last_em = item_no[item_no.length - 1];
-    setitemno((prev_item) => [...prev_item, last_em + 1]);
+    setitemno([...item_no, last_em + 1]);
   };
   //receingng select product value
   const select_change_pro = (e) => {
@@ -44,16 +48,16 @@ useEffect(() => {
     var s_val = e.target.value;
  
       //no need to update cause json key update its value automatically
-    setSelect_pro_input((prev)=>({...prev,[s_id]:s_val}));
+    setSelect_pro_input({...select_pro_input,[s_id]:s_val});
     
-    console.log(select_pro_input,item_no.length-1);
+    // console.log(select_pro_input,item_no.length-1);
   };
   const select_change_val = (e) => {
     var s_id = e.target.id;
     var s_val = e.target.value;
     
-    setSelect_val_input((prev)=>({...prev,[s_id]:s_val}));
-    console.log(select_val_input,item_no.length-1);
+    setSelect_val_input({...select_val_input,[s_id]:s_val});
+    // console.log(select_val_input,item_no.length-1);
   };
 
   const handleChange = (e) => {
@@ -76,12 +80,18 @@ useEffect(() => {
   
     var pro_array = Object.values(select_pro_input);
     var val_array = Object.values(select_val_input);
+    console.log("pro_array ",JSON.stringify(pro_array));
+    console.log("val array ",JSON.stringify(val_array))
+
+    var normal_json = {};
 
     for(var i=0;i<=item_no.length-1;i++){
-      setfinal_json((prev)=>({...prev,[pro_array[i]]:val_array[i]}));
-    }
-  console.log(final_json);
+      
+      normal_json = {...normal_json,[pro_array[i]]:val_array[i]};
 
+    }
+console.log("normal json ",normal_json)
+setmerge_complete(1);
   };
  
 
@@ -192,8 +202,9 @@ useEffect(() => {
             </div>
            
           </form> */}
+       
 
-      <form>
+      <form className="mt-5">
         {/* product selectbox */}
 
       
@@ -288,6 +299,7 @@ useEffect(() => {
           </button>
         </div>
       </form>
+     
     </React.Fragment>
   );
 }
