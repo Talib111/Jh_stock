@@ -15,11 +15,16 @@ function Home(props) {
 
     }
     
-    const Edit_value = ()=>{
+    const buy_product = ()=>{
        
        window.location.href="/form";
 
     }
+    const add_product = ()=>{
+       
+        window.location.href="/form";
+ 
+     }
 
     //getting data
     useEffect(() => {
@@ -56,8 +61,9 @@ function Home(props) {
             </div>
             </div>
            
-            <button className="btn btn-danger mt-5" onClick={logout_me}>Logout</button>
-            <button className="btn btn-danger mt-5" onClick={Edit_value}>Edit</button>
+            <button className="btn btn-info mt-5 mx-2" onClick={logout_me}>Logout</button>
+            <button className="btn btn-danger mt-5 mx-2 px-3" onClick={buy_product}>Buy</button>
+            <button className="btn btn-success mt-5 mx-2 px-3" onClick={add_product}>Add</button>
             </>
         )
     }

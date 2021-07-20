@@ -12,8 +12,10 @@ const save_pro_data = async (req, res) => {
 const update_pro_data = async (req, res) => {
   // var newval = {$set: req.body};
   // var newval = {$set: {"all_Products.Hepta":50,"all_Products.Tulsi": 59,"all_Products.Breno": 100}};
-  // console.log(req.body.all_Products);
+  console.log(req.body);
+//   res.send('reached');
   //destructing 2nd level object as array to upsert since upsert is not working in second level via adding all_products
+
 var final_js={};
 var pro_array = Object.keys(req.body.all_Products);
 var val_array = Object.values(req.body.all_Products);
@@ -30,15 +32,16 @@ final_js={...final_js, total_Stock: req.body.total_Stock,last_Purchased: req.bod
     $set: final_js
   };
 
-  All_Products.updateOne({ _id: "mark11" }, newval1, { upsert: true })
+  All_Products.updateOne({ _id: "mark11" }, newval1, { upsert: false })
     .then(() => {
       // I think upsert in 1st level only and second level is replacing
       res.send(final_js);
-      final_js={};
+    //   final_js={};
     })
     .catch((e) => {
       res.send(e);
     });
+     
 };
 
 const get_pro_data = async (req, res) => {

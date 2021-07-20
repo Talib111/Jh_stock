@@ -12,15 +12,6 @@ const All_productSchema = new mongoose.Schema({
   last_Updated_Date: {
     type: String
   },
-  name:{
-    type: String
-  },
-  add: {
-    type: String
-  },
-  good: {
-    type: String
-  },
   last_Purchased: {
     type: String
   },

@@ -16,13 +16,15 @@ function Form(props) {
   const [product_json, setproduct_json] = useState({"good": "yes"});
   const [all_p_data, setall_p_data] = useState({"empty": "null"})
 
+  var p_j;
+
   useEffect(() => {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
       if(this.readyState == 4 && this.status==200){
         console.log(this.responseText);
         setall_p_data(JSON.parse(this.responseText));
-        var p_j = JSON.parse(this.responseText);
+        p_j = JSON.parse(this.responseText);
         // var p_j_keys = p_j.keys
         setproduct_json(p_j.all_Products);
       }
@@ -78,33 +80,40 @@ function Form(props) {
       hour = hour - 12;
       am_pm = 'pm';
     }
-    
+
+    //====== 1 last updated date==========
     var full_time = `${hour}:${min}:${second} ${am_pm}  ${day}/${month}/${year}`;
     console.log(full_time);
     
-    var total_stock = 0;
+    var total_buy = 0;
     for (var i = 0; i <= item_no.length - 1; i++) {
       //subtract value here
       //normal json is to set the default value;
-      normal_json = { ...normal_json, ["all_Products."+pro_array[i]]: val_array[i] };
+      // normal_json = { ...normal_json, [pro_array[i]]: val_array[i] };
       //change to integer data type
       // console.log(product_json[pro_array[i]])
-      //===========getting total of all products
-      total_stock = total_stock + parseInt(pro_array[i]);
+      //=========== 2 last purchased ==========
+      total_buy = total_buy + parseInt(val_array[i]);
 
 
-      //===========getting total
-      // var db_int = parseInt(product_json[pro_array[i]]);
-      // var val_int = parseInt(val_array[i]);
-      // var sub_val = db_int - val_int;
-      // // final_json = {...final_json, ["all_Products."+pro_array[i]]: sub_val}
-      // final_json = {...final_json, [pro_array[i]]: sub_val}
-      // console.log(final_json);
+      // ===========getting total
+      var db_int = parseInt(product_json[pro_array[i]]);
+      var val_int = parseInt(val_array[i]);
+      var sub_val = db_int - val_int;
+      // final_json = {...final_json, ["all_Products."+pro_array[i]]: sub_val}
+
+      //==== 3 all products
+      final_json = {...final_json, [pro_array[i]]: sub_val}
+      console.log(final_json);
     }
     // var final_total_stock = parseInt(setall_p_data.total_Stock) - total_stock;
-    var final_total_stock = 20;
+    // console.log("befor",all_p_data.total_Stock);
+    
+    //==== 4 total stock =========
+    var final_total_stock = parseInt(all_p_data.total_Stock) - total_buy;
+    // console.log("after",final_total_stock);
     // console.log(" final json ",final_json);
-    send_to_backend(normal_json,full_time,final_total_stock,total_stock);
+    send_to_backend(final_json,full_time,final_total_stock,total_buy);
     // send_to_backend(normal_json);
 
   };
@@ -131,7 +140,7 @@ function Form(props) {
   //   // validationSchema,
   // });
 
-  const send_to_backend=(values,full_time,final_total_stock,total_stock)=>{
+  const send_to_backend=(values,full_time,final_total_stock,total_buy)=>{
     // const send_to_backend=(values)=>{
     console.log("final json",values);
     var xhttp = new XMLHttpRequest();
@@ -142,7 +151,7 @@ function Form(props) {
     }
     xhttp.open("POST","http://localhost:3000/products/update",true);
     xhttp.setRequestHeader('Content-Type',"application/json");
-    xhttp.send(JSON.stringify({_id: "mark11",all_Products: values,last_Updated_Date:full_time,total_Stock: final_total_stock,last_Purchased:total_stock}));
+    xhttp.send(JSON.stringify({_id: "mark11",all_Products: values,last_Updated_Date:full_time,total_Stock: final_total_stock,last_Purchased:total_buy}));
     // xhttp.send(JSON.stringify({_id: "mark11",all_Products: values}));
 
   }
@@ -150,7 +159,7 @@ function Form(props) {
   return (
     <React.Fragment>
      
-
+      <h4 className="bg-danger">Purchase Item</h4>
       <form className="mt-5" >
         {/* product selectbox */}
 
