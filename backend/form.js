@@ -18,9 +18,9 @@ require('./src/utils/adminRole');
 require('./src/utils/userRole');
 
 const adminRoute = require('./src/routes/admin');
-const helperRoute = require('./src/routes/helper');
-
+const save_Data = require('./src/routes/save_data')
 app.use('/admin', adminRoute);
+app.use('/products',save_Data);
 // app.use('/helper', helperRoute);
 
 

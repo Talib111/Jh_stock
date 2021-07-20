@@ -48,28 +48,36 @@ function App() {
     setIsAuthenticated(true);
     setLoading(false);
   };
-  return (
-    <BrowserRouter>
-      <div className="App">
-        <Header />
-
-        
-
-        <Switch>
-        <Route exact path='/'>
-        <Home isAuthenticated={isAuthenticated} />
-        </Route>
-
-          <Route path="/signin">
-            <SignIn setIsAuthenticated={setIsAuthenticated} />
+  if(loading){
+    return(
+      <h1>loading....</h1>
+    )
+  }
+  else{
+    return (
+      <BrowserRouter>
+        <div className="App">
+          <Header />
+  
+          
+  
+          <Switch>
+          <Route exact path='/'>
+          <Home isAuthenticated={isAuthenticated} />
           </Route>
-          <Route path="/form">
-            <Form/>
+  
+            <Route path="/signin">
+              <SignIn setIsAuthenticated={setIsAuthenticated} />
             </Route>
-        </Switch>
-      </div>
-    </BrowserRouter>
-  );
+            <Route path="/form">
+              <Form/>
+              </Route>
+          </Switch>
+        </div>
+      </BrowserRouter>
+    );
+  }
+  
 }
 
 export default App;
