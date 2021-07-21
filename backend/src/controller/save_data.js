@@ -29,10 +29,11 @@ for(let i = 0;i<=pro_array.length - 1;i++){
 //addding other value in final_js
 final_js={...final_js, total_Stock: req.body.total_Stock,last_Purchased: req.body.last_Purchased, last_Updated_Date: req.body.last_Updated_Date}
   var newval1 = {//all of these destructuring is equall to req.body
-    $set: final_js
+    $set: final_js,
+    $push: {History:req.body.History}
   };
 
-  All_Products.updateOne({ _id: "mark11" }, newval1, { upsert: false })
+  All_Products.updateOne({ _id: "mark11" }, newval1, { upsert: true,multi:true })
     .then(() => {
       // I think upsert in 1st level only and second level is replacing
       res.send(final_js);

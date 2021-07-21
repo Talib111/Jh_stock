@@ -6,7 +6,7 @@ import { string } from "yup/lib/locale";
 // //for redux
 // import { connect } from "react-redux";
 
-function Form(props) {
+function Add_pro(props) {
   const [item_no, setitemno] = useState([1]);
   //product array
   const [select_pro_input, setSelect_pro_input] = useState([]);
@@ -113,9 +113,7 @@ function Form(props) {
     var final_total_stock = parseInt(all_p_data.total_Stock) - total_buy;
     // console.log("after",final_total_stock);
     // console.log(" final json ",final_json);
-    //==== 5 history record ================
-    var History = {Time:full_time,Product_Added:0,Product_Purchased:total_buy,Changer:"admin",Stock_Remaining:final_total_stock}
-    send_to_backend(final_json,full_time,final_total_stock,total_buy,History);
+    send_to_backend(final_json,full_time,final_total_stock,total_buy);
     // send_to_backend(normal_json);
 
   };
@@ -142,7 +140,7 @@ function Form(props) {
   //   // validationSchema,
   // });
 
-  const send_to_backend=(values,full_time,final_total_stock,total_buy,History)=>{
+  const send_to_backend=(values,full_time,final_total_stock,total_buy)=>{
     // const send_to_backend=(values)=>{
     console.log("final json",values);
     var xhttp = new XMLHttpRequest();
@@ -153,7 +151,7 @@ function Form(props) {
     }
     xhttp.open("POST","http://localhost:3000/products/update",true);
     xhttp.setRequestHeader('Content-Type',"application/json");
-    xhttp.send(JSON.stringify({_id: "mark11",all_Products: values,last_Updated_Date:full_time,total_Stock: final_total_stock,last_Purchased:total_buy,History}));
+    xhttp.send(JSON.stringify({_id: "mark11",all_Products: values,last_Updated_Date:full_time,total_Stock: final_total_stock,last_Purchased:total_buy}));
     // xhttp.send(JSON.stringify({_id: "mark11",all_Products: values}));
 
   }
@@ -161,7 +159,7 @@ function Form(props) {
   return (
     <React.Fragment>
      
-      <h4 className="bg-danger">Purchase Item</h4>
+      <h4 className="bg-danger">Add Item</h4>
       <form className="mt-5" >
         {/* product selectbox */}
 
@@ -259,7 +257,7 @@ function Form(props) {
             style={{ display: "block" }}
             onClick={merge_array}
           >
-            &nbsp;&nbsp;Buy Products&nbsp;&nbsp;
+            &nbsp;&nbsp;Add Products&nbsp;&nbsp;
           </button>
         </div>
       </form>
@@ -284,5 +282,5 @@ function Form(props) {
 //   };
 //   ///for reudux
 
-export default Form;
+export default Add_pro;
 // export default connect(mapStateToProps,mapDispatchToProps)(Bank_account_details_form)

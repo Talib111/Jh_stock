@@ -55,10 +55,11 @@ const All_productSchema = new mongoose.Schema({
 },
 KB100 :{
   type: String
-},"9B100" :{
-  type: String
 }
     
+  },
+  History:{
+     type: Array
   }
   
 });

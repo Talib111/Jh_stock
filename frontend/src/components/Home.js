@@ -22,7 +22,7 @@ function Home(props) {
     }
     const add_product = ()=>{
        
-        window.location.href="/form";
+        window.location.href="/add";
  
      }
 
@@ -53,11 +53,12 @@ function Home(props) {
             <Dashboard last_Updated_Date={all_p_data.last_Updated_Date} total_Stock={all_p_data.total_Stock} last_Purchased={all_p_data.last_Purchased}/>
             <div className="container mt-5">
                 <div className="row">
-            {Object.keys(product_json).map((val)=>(
-                <div className="col-sm-4 mt-2"> <Products name={val}/></div>
+            {Object.keys(product_json).map((val,index)=>(
+                <div className="col-sm-4 mt-2"> <Products name={val} value={product_json[val]} num={index+1}/></div>
            
 
             ))}
+            
             </div>
             </div>
            

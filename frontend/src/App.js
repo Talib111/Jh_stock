@@ -11,6 +11,9 @@ import { BrowserRouter, Route, Switch, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import SignIn from "./components/SignIn";
+import Add_pro from "./components/Add_pro"
+import History from "./components/History";
+import All_team_table from "./components/All_team_table";
 
 
 function App() {
@@ -71,6 +74,12 @@ function App() {
             </Route>
             <Route path="/form">
               <Form/>
+              </Route>
+              <Route path="/add">
+              <Add_pro/>
+              </Route>
+              <Route path="/history">
+             <All_team_table/>
               </Route>
           </Switch>
         </div>
