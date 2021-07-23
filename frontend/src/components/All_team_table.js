@@ -10,30 +10,43 @@ import '../Styles/table.css'
 function All_team_table() {
   const [product_json, setproduct_json] = useState({"good": "yes"});
   const [all_p_data, setall_p_data] = useState({"empty": "null"})
+  const [his, sethis] = useState([{},{}])
   const [loading, setloading] = useState(true)
+  const [controler, setcontroler] = useState(0)
 
   var p_j;
+  var p_dt;
   
   
   useEffect(() => {
-    var xhttp = new XMLHttpRequest();
+   
+      var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
       if(this.readyState == 4 && this.status==200){
         console.log(this.responseText);
         setall_p_data(JSON.parse(this.responseText));
         p_j = JSON.parse(this.responseText);
+        sethis(p_j.History);
+        console.log("history ",p_j.History)
         // var p_j_keys = p_j.keys
         setproduct_json(p_j.all_Products);
+        setloading(false);
       }
     }
     xhttp.open("POST","http://localhost:3000/products/get",true);
     xhttp.setRequestHeader('Content-Type',"application/json");
     xhttp.send(JSON.stringify({_id: "mark11"}));
+   
 },[])
 
+
+
+
     const columns = useMemo(()=>COLUMNS, [])
-    const data = useMemo(()=>MOCk_DATA, [])
-    // const data = useMemo(()=>all_p_data.History, [])
+    // const data = useMemo(()=>MOCk_DATA, [])
+
+    
+    const data = useMemo(()=>his, [])
 
      
 
@@ -50,6 +63,7 @@ function All_team_table() {
     } = useTable({
         columns,
         data
+        
     }, 
     
     //for checkbox
@@ -85,11 +99,19 @@ function All_team_table() {
 
     // const { globalFilter} = state
 
-    return (
+
+    if(loading){
+      return(
+        <h1>loading.....</h1>
+      )
+    } 
+
+    else{
+       return (
         <>
         {/* <GlobalFilter filter ={globalFilter} setFilter={setGlobalFilter}/> */}
-        <table class="table mt-2" {...getTableProps()}>
-  <thead class="thead-dark">
+        <table className="table mt-2" {...getTableProps()}>
+  <thead className="thead-dark text-white">
     {headerGroups.map((headerGroups) => (
         <tr {...headerGroups.getHeaderGroupProps()} className="bg-success text-white">
             {headerGroups.headers.map((column)=> (
@@ -129,6 +151,9 @@ function All_team_table() {
       </pre>
         </>
     )
+    }
+
+   
 }
 
 export default All_team_table

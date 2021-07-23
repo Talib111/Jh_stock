@@ -1,6 +1,8 @@
 import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/js/bootstrap"
+// import "bootstrap/dist/js/bootstrap.bundle"
 import Dashboard from "./components/Dashboard";
 import Products from "./components/Products";
 import Form from "./components/Form";
@@ -14,6 +16,7 @@ import SignIn from "./components/SignIn";
 import Add_pro from "./components/Add_pro"
 import History from "./components/History";
 import All_team_table from "./components/All_team_table";
+import Nav from "./components/Nav";
 
 
 function App() {

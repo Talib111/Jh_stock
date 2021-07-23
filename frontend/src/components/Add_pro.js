@@ -85,7 +85,7 @@ function Add_pro(props) {
     var full_time = `${hour}:${min}:${second} ${am_pm}  ${day}/${month}/${year}`;
     console.log(full_time);
     
-    var total_buy = 0;
+    var total_add = 0;
     for (var i = 0; i <= item_no.length - 1; i++) {
       //subtract value here
       //normal json is to set the default value;
@@ -93,27 +93,29 @@ function Add_pro(props) {
       //change to integer data type
       // console.log(product_json[pro_array[i]])
       //=========== 2 last purchased ==========
-      total_buy = total_buy + parseInt(val_array[i]);
+      total_add = total_add + parseInt(val_array[i]);
 
 
       // ===========getting total
       var db_int = parseInt(product_json[pro_array[i]]);
       var val_int = parseInt(val_array[i]);
-      var sub_val = db_int - val_int;
+      var add_val = db_int + val_int;
       // final_json = {...final_json, ["all_Products."+pro_array[i]]: sub_val}
 
       //==== 3 all products
-      final_json = {...final_json, [pro_array[i]]: sub_val}
+      final_json = {...final_json, [pro_array[i]]: add_val}
       console.log(final_json);
     }
     // var final_total_stock = parseInt(setall_p_data.total_Stock) - total_stock;
     // console.log("befor",all_p_data.total_Stock);
     
     //==== 4 total stock =========
-    var final_total_stock = parseInt(all_p_data.total_Stock) - total_buy;
+    var final_total_stock = parseInt(all_p_data.total_Stock) + total_add;
     // console.log("after",final_total_stock);
     // console.log(" final json ",final_json);
-    send_to_backend(final_json,full_time,final_total_stock,total_buy);
+    //==== 5 history record ================
+    var History = {Time:full_time,Product_Added:total_add,Product_Purchased:0,Changer:"admin",Stock_Remaining:final_total_stock}
+    send_to_backend(final_json,final_total_stock,History);
     // send_to_backend(normal_json);
 
   };
@@ -140,7 +142,7 @@ function Add_pro(props) {
   //   // validationSchema,
   // });
 
-  const send_to_backend=(values,full_time,final_total_stock,total_buy)=>{
+  const send_to_backend=(values,final_total_stock,History)=>{
     // const send_to_backend=(values)=>{
     console.log("final json",values);
     var xhttp = new XMLHttpRequest();
@@ -149,17 +151,16 @@ function Add_pro(props) {
         console.log(this.responseText);
       }
     }
-    xhttp.open("POST","http://localhost:3000/products/update",true);
+    xhttp.open("POST","http://localhost:3000/products/updateadd",true);
     xhttp.setRequestHeader('Content-Type',"application/json");
-    xhttp.send(JSON.stringify({_id: "mark11",all_Products: values,last_Updated_Date:full_time,total_Stock: final_total_stock,last_Purchased:total_buy}));
-    // xhttp.send(JSON.stringify({_id: "mark11",all_Products: values}));
+    xhttp.send(JSON.stringify({_id: "mark11",all_Products: values,total_Stock: final_total_stock,History}));
 
   }
 
   return (
     <React.Fragment>
      
-      <h4 className="bg-danger">Add Item</h4>
+      <h4 className="bg-danger">Purchase Item</h4>
       <form className="mt-5" >
         {/* product selectbox */}
 
@@ -257,7 +258,7 @@ function Add_pro(props) {
             style={{ display: "block" }}
             onClick={merge_array}
           >
-            &nbsp;&nbsp;Add Products&nbsp;&nbsp;
+            &nbsp;&nbsp;Buy Products&nbsp;&nbsp;
           </button>
         </div>
       </form>

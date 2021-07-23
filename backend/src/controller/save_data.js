@@ -45,6 +45,39 @@ final_js={...final_js, total_Stock: req.body.total_Stock,last_Purchased: req.bod
      
 };
 
+//adding data
+const update_add_pro_data = async (req, res) => {
+  
+  console.log(req.body);
+
+
+var final_js={};
+var pro_array = Object.keys(req.body.all_Products);
+var val_array = Object.values(req.body.all_Products);
+
+for(let i = 0;i<=pro_array.length - 1;i++){
+   final_js={...final_js,["all_Products."+pro_array[i]]: val_array[i]}//wrapping with upper curly bracket
+}
+
+//addding other value in final_js
+final_js={...final_js, total_Stock: req.body.total_Stock}
+  var newval1 = {//all of these destructuring is equall to req.body
+    $set: final_js,
+    $push: {History:req.body.History}
+  };
+
+  All_Products.updateOne({ _id: "mark11" }, newval1, { upsert: true,multi:true })
+    .then(() => {
+      // I think upsert in 1st level only and second level is replacing
+      res.send(final_js);
+    //   final_js={};
+    })
+    .catch((e) => {
+      res.send(e);
+    });
+     
+};
+
 const get_pro_data = async (req, res) => {
   All_Products.findOne({ _id: req.body._id }, function (err, result) {
     res.send(result);
@@ -57,4 +90,4 @@ const get_pro_data = async (req, res) => {
     });
 };
 
-module.exports = { save_pro_data, update_pro_data, get_pro_data };
+module.exports = { save_pro_data, update_pro_data, get_pro_data, update_add_pro_data};
