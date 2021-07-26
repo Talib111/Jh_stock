@@ -3,10 +3,16 @@ import { useFormik, Formik } from "formik";
 import * as Yup from "yup";
 import "../css/form.css";
 import { string } from "yup/lib/locale";
+import {AiOutlineAppstoreAdd} from 'react-icons/ai'
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+  import ClipLoader from 'react-spinners/ClipLoader';
+
 // //for redux
 // import { connect } from "react-redux";
 
 function Add_pro(props) {
+  const [loader2, setloader2] = useState(false);
   const [item_no, setitemno] = useState([1]);
   //product array
   const [select_pro_input, setSelect_pro_input] = useState([]);
@@ -60,6 +66,7 @@ function Add_pro(props) {
   // merging the both select value array
   const merge_array = (e) => {
     e.preventDefault(true);
+    setloader2(true);
 
     var pro_array = Object.values(select_pro_input);
     var val_array = Object.values(select_val_input);
@@ -148,7 +155,10 @@ function Add_pro(props) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
       if(this.readyState == 4 && this.status==200){
-        console.log(this.responseText);
+       if(this.responseText=="Success"){
+    setloader2(false);
+        toast.success('Product Added successfully!',{autoClose: false});
+       }
       }
     }
     xhttp.open("POST","http://localhost:3000/products/updateadd",true);
@@ -157,11 +167,16 @@ function Add_pro(props) {
 
   }
 
+  
   return (
     <React.Fragment>
-     
-      <h4 className="bg-danger">Purchase Item</h4>
-      <form className="mt-5" >
+     <ToastContainer/>
+     <div className="spin" style={{"position": "absolute","top":"50vh","left": "50vw"}}>
+<ClipLoader color={"red"} loading={loader2}   />
+  </div>    
+  <h4 className="mt-3 px-1" style={{"textAlign": "left"}}><AiOutlineAppstoreAdd/> Add Product</h4>
+
+      <form className="mt-1 border shadow-sm py-5" >
         {/* product selectbox */}
 
         <div id="all_selectbox">
@@ -175,14 +190,17 @@ function Add_pro(props) {
                 marginTop: "10px",
               }}
             >
-              <h5>{etm}&nbsp;</h5>
+              <h5>&nbsp;{etm}&nbsp;</h5>
               <div style={{ flex: 1 }}>
                 <input
+                 style={{width: "90%"}}
                   type="text"
                   list={"pro_name_in"+etm}
                   id={"product_" + etm}
                   name={"p_name"+etm}
                   onChange={select_change_pro}
+                  placeholder="Enter Product"
+
                   // {...formik.getFieldProps("account_Holder")}
                 />
                 <datalist id={"pro_name_in"+etm}>
@@ -207,11 +225,14 @@ function Add_pro(props) {
 
               <div style={{ flex: 1 }}>
                 <input
+                 style={{width: "90%"}}
                   type="text"
                   list={"pro_val_in"+etm}
                   id={"value_" + etm}
                   name={"P_value"+etm}
                   onChange={select_change_val}
+                  placeholder="Value"
+
                   // {...formik.getFieldProps("account_Holder")}
                 />
                 <datalist id={"pro_val_in"+etm}>
@@ -252,13 +273,13 @@ function Add_pro(props) {
 
         <div className="text-center mt-4">
           <button
-            className="btn btn-info btn-md waves-effect waves-light"
+            className="btn btn-info btn-md waves-effect waves-light shadow"
             type="submit"
             // onClick={merge_array}
-            style={{ display: "block" }}
+            style={{ display: "block",margin: "auto",fontWeight: "700"  }}
             onClick={merge_array}
           >
-            &nbsp;&nbsp;Buy Products&nbsp;&nbsp;
+            &nbsp;&nbsp;<AiOutlineAppstoreAdd/> Add Products&nbsp;&nbsp;
           </button>
         </div>
       </form>

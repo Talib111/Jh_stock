@@ -5,6 +5,8 @@ import {COLUMNS} from './Columns'
 import { Checkbox } from './Checkbox'
 // import { GlobalFilter } from './GolbalFilter'
 import '../Styles/table.css'
+import {RiChatHistoryFill} from 'react-icons/ri'
+
 
 
 function All_team_table() {
@@ -46,7 +48,7 @@ function All_team_table() {
     // const data = useMemo(()=>MOCk_DATA, [])
 
     
-    const data = useMemo(()=>his, [])
+    const data = useMemo(()=>his, [his])
 
      
 
@@ -70,31 +72,31 @@ function All_team_table() {
    
     // useGlobalFilter,
     useSortBy,
-    useRowSelect,
-    (hooks) =>  {
-        hooks.visibleColumns.push(columns => [
-          // Let's make a column for selection
-          {
-            id: 'selection',
-            // The header can use the table's getToggleAllRowsSelectedProps method
-            // to render a checkbox
-            Header: ({ getToggleAllRowsSelectedProps }) => (
-              <div>
-                <Checkbox {...getToggleAllRowsSelectedProps()} />
-              </div>
-            ),
-            // The cell can use the individual row's getToggleRowSelectedProps method
-            // to the render a checkbox
-            Cell: ({ row }) => (
-              <div>
-                <Checkbox {...row.getToggleRowSelectedProps()} />
-              </div>
-            ),
-          },
+    // useRowSelect,
+    // (hooks) =>  {
+    //     hooks.visibleColumns.push(columns => [
+    //       // Let's make a column for selection
+    //       {
+    //         id: 'selection',
+    //         // The header can use the table's getToggleAllRowsSelectedProps method
+    //         // to render a checkbox
+    //         Header: ({ getToggleAllRowsSelectedProps }) => (
+    //           <div>
+    //             <Checkbox {...getToggleAllRowsSelectedProps()} />
+    //           </div>
+    //         ),
+    //         // The cell can use the individual row's getToggleRowSelectedProps method
+    //         // to the render a checkbox
+    //         Cell: ({ row }) => (
+    //           <div>
+    //             <Checkbox {...row.getToggleRowSelectedProps()} />
+    //           </div>
+    //         ),
+    //       },
         
-          ...columns,
-        ])
-      }
+    //       ...columns,
+    //     ])
+    //   }
     )
 
     // const { globalFilter} = state
@@ -102,7 +104,7 @@ function All_team_table() {
 
     if(loading){
       return(
-        <h1>loading.....</h1>
+        <h1>loading....</h1>
       )
     } 
 
@@ -110,7 +112,9 @@ function All_team_table() {
        return (
         <>
         {/* <GlobalFilter filter ={globalFilter} setFilter={setGlobalFilter}/> */}
-        <table className="table mt-2" {...getTableProps()}>
+  <h4 className="mt-3 px-1" style={{"textAlign": "left"}}><RiChatHistoryFill/> History</h4>
+
+        <table className="table mt-3" {...getTableProps()}>
   <thead className="thead-dark text-white">
     {headerGroups.map((headerGroups) => (
         <tr {...headerGroups.getHeaderGroupProps()} className="bg-success text-white">
@@ -134,21 +138,7 @@ function All_team_table() {
    })}
   </tbody>
 </table>
-{/* to show checkbox selected row */}
-<pre>
-        <code>
-          {JSON.stringify(
-            {
-            //   selectedRowIds: selectedRowIds,
-              'selectedFlatRows[].original': selectedFlatRows.map(
-                d => d.original
-              ),
-            },
-            null,
-            2
-          )}
-        </code>
-      </pre>
+
         </>
     )
     }

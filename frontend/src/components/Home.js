@@ -51,7 +51,7 @@ function Home(props) {
         return (
             <>
             <Dashboard last_Updated_Date={all_p_data.last_Updated_Date} total_Stock={all_p_data.total_Stock} last_Purchased={all_p_data.last_Purchased}/>
-            <div className="container mt-5">
+            <div className="container mt-5 mb-5">
                 <div className="row">
             {Object.keys(product_json).map((val,index)=>(
                 <div className="col-sm-4 mt-2"> <Products name={val} value={product_json[val]} num={index+1}/></div>
@@ -61,10 +61,7 @@ function Home(props) {
             
             </div>
             </div>
-           
-            <button className="btn btn-info mt-5 mx-2" onClick={logout_me}>Logout</button>
-            <button className="btn btn-danger mt-5 mx-2 px-3" onClick={buy_product}>Buy</button>
-            <button className="btn btn-success mt-5 mx-2 px-3" onClick={add_product}>Add</button>
+       
             </>
         )
     }

@@ -1,6 +1,7 @@
 var exp = require('express');
 var cors = require('cors');
 const passport = require('passport');
+const {Admin_role} = require('./src/Role/Admin_role')
 // const body_p = require('body-parser')
 //it will run conn file automatically
 require('./db/conn');
@@ -23,7 +24,9 @@ app.use('/admin', adminRoute);
 app.use('/products',save_Data);
 // app.use('/helper', helperRoute);
 
-
+app.post('/test',Admin_role, (req,res)=>{
+	res.send("serving from cloud server and hurrah node is working from cloud");
+})
 
 app.listen(port, () => {
 	console.log(`nodes js is listening at ${port}`);
