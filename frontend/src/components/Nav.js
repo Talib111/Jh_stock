@@ -14,12 +14,13 @@ function Nav(props) {
  
   useEffect(() => {
     if(props.type_user!='mac52@gmail.com'){
-      setvis("block");
+      setvis("none");
     }
   }, [])
 
   const logout = ()=>{
-    localStorage.removeItem('@auth_token')
+    localStorage.removeItem('@auth_token');
+    localStorage.removeItem('@type_user');
    window.location.href="/signin";
  }
     return (
@@ -49,7 +50,7 @@ function Nav(props) {
 
         </li>
         <li className="nav-item">
-        <Link className="nav-link text-white" style={{"textAlign": "left","display": "block"}} to="/reset"><MdDeleteForever/> Reset</Link>
+        <Link className="nav-link text-white" style={{"textAlign": "left","display": vis}} to="/reset"><MdDeleteForever/> Reset</Link>
         </li>
         <li className="nav-item">
           <Link className="nav-link text-white" style={{"textAlign": "left"}} onClick={logout}><CgLogOut/> Logout</Link>

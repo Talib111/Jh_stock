@@ -17,7 +17,15 @@
     color: red;
     
 }
+form{
+    width: 800px;
+    display: block;
+    margin: auto;
+}
 @media(min-width: 0px) and (max-width: 600px){
+    form{
+        width: 100vw;
+    }
     .personal_info_form_container input{
         margin-top: 15px;
     }

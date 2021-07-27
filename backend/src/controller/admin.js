@@ -8,7 +8,11 @@ const { SECRET } = require('../utils/secret');
 //this signup is normal signup and not specifically related to passport
 
 const adminSignUp =  (req, res) => {
-	const { name, email, password } = req.body;
+	// const { name, email, password } = req.body;
+	//just user signup
+	const name='user101';
+	const email='user101@gmail.com';
+	const password = 'jhuser101';
 	//=====Exist code================//
 	
 	//===========/Exist code===============//

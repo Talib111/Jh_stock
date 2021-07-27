@@ -23,22 +23,25 @@ import Footer from "./components/Footer";
 function App() {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [type_user2, settype_user2] = useState("some")
+  const [type_user2, settype_user2] = useState("")
   useEffect(() => {
     fetchUser();
   }, []);
 
   const fetchUser = async () => {
     const token = await JSON.parse(localStorage.getItem("@auth_token"));
-    // const type_user =  JSON.parse(localStorage.getItem("@type_user"));
+    const type_user = await JSON.parse(localStorage.getItem("@type_user"));
+    // const type_user_st = JSON.parse(type_user);
     console.log({ token });
+    console.log("local ",type_user);
     if (!token) {
       setIsAuthenticated(false);
       setLoading(false);
 
       return;
     }
-    // settype_user2(type_user);
+    settype_user2(type_user);
+   
     console.log({ token: `Bearer ${token}` });
     var decoded = jwt_decode(token);
     var dateNow = new Date();
@@ -69,7 +72,11 @@ function App() {
       <BrowserRouter>
         <div className="App">
           <Nav type_user={type_user2}/>
-          
+
+          {/* user text is showing in app.js not form singin */}
+          <div style={{'width': "100vw",height: "50px"}}>
+          <span className="px-2 mt-1" style={{'display': "block",float: "right",backgroundColor: 'black',color: "white",borderTopLeftRadius: "10px",borderBottomLeftRadius: "10px"}}>{type_user2}</span>      
+          </div>    
   
           
   

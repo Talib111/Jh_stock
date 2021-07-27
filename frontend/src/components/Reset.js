@@ -6,6 +6,8 @@ import { string } from "yup/lib/locale";
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
   import ClipLoader from 'react-spinners/ClipLoader';
+import {MdDeleteForever} from 'react-icons/md'
+
 
 
 function Reset(props) {
@@ -42,8 +44,8 @@ function Reset(props) {
       <div className="spin" style={{"position": "absolute","top":"50vh","left": "50vw"}}>
 <ClipLoader color={"red"} loading={loader2}   />
   </div>      
-
-      <button className="btn btn-warning" onClick={send_to_backend}>Reset Data</button>
+      <h4 className="mt-5">Your Entire data will be deleted</h4>
+      <button className="btn btn-danger mt-2 shadow" onClick={send_to_backend}><MdDeleteForever/> Reset Data</button>
     </React.Fragment>
   );
 }

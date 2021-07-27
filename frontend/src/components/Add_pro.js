@@ -12,6 +12,8 @@ import { ToastContainer, toast } from 'react-toastify';
 // import { connect } from "react-redux";
 
 function Add_pro(props) {
+  const [p_error, setp_error] = useState('')
+  const [v_error, setv_error] = useState('')
   const [loader2, setloader2] = useState(false);
   const [item_no, setitemno] = useState([1]);
   //product array
@@ -23,6 +25,7 @@ function Add_pro(props) {
   const [all_p_data, setall_p_data] = useState({"empty": "null"})
 
   var p_j;
+  var product_include = ["Pnr","Png"];
 
   useEffect(() => {
     var xhttp = new XMLHttpRequest();
@@ -41,9 +44,30 @@ function Add_pro(props) {
 },[])
 
   const add_item = () => {
-    // item_no.map for total no of inputs
-    var last_em = item_no[item_no.length - 1];
-    setitemno([...item_no, last_em + 1]);
+     //=================input validation=================
+     var local_ppp = document.getElementById("product_"+item_no[item_no.length-1]).value;
+     var local_vvv = document.getElementById("value_"+item_no[item_no.length-1]).value;
+     console.log(local_ppp);
+     
+     if(local_ppp==""){
+      setp_error('Enter products !')
+    }
+     //valid product entry
+     else if(!product_include.includes(local_ppp)){
+      setp_error("Noooooooo!");
+    }
+    else if(local_vvv==""){
+      setp_error('');
+      setv_error("Enter value !")
+    }
+   
+    //=================input validation=================
+   else{
+      setp_error('');
+      setv_error("");
+     var last_em = item_no[item_no.length - 1];
+     setitemno([...item_no, last_em + 1]);
+    }
   };
   //receingng select product value
   const select_change_pro = (e) => {
@@ -66,7 +90,22 @@ function Add_pro(props) {
   // merging the both select value array
   const merge_array = (e) => {
     e.preventDefault(true);
-    setloader2(true);
+     //=================input validation=================
+     var local_ppp = document.getElementById("product_"+item_no[item_no.length-1]).value;
+     var local_vvv = document.getElementById("value_"+item_no[item_no.length-1]).value;
+     
+     if(local_ppp==""){
+      setp_error('Enter products !')
+    }
+    else if(local_vvv==""){
+      setp_error('');
+      setv_error("Enter value !")
+    }
+    //=================input validation=================
+   else{
+      setp_error('');
+      setv_error("");
+      setloader2(true);
 
     var pro_array = Object.values(select_pro_input);
     var val_array = Object.values(select_val_input);
@@ -122,8 +161,10 @@ function Add_pro(props) {
     // console.log(" final json ",final_json);
     //==== 5 history record ================
     var History = {Time:full_time,Product_Added:total_add,Product_Purchased:0,Changer:"admin",Stock_Remaining:final_total_stock}
-    send_to_backend(final_json,final_total_stock,History);
+    // send_to_backend(final_json,final_total_stock,History);
     // send_to_backend(normal_json);
+     }
+    
 
   };
 
@@ -226,7 +267,7 @@ function Add_pro(props) {
               <div style={{ flex: 1 }}>
                 <input
                  style={{width: "90%"}}
-                  type="text"
+                  type="number"
                   list={"pro_val_in"+etm}
                   id={"value_" + etm}
                   name={"P_value"+etm}
@@ -252,6 +293,9 @@ function Add_pro(props) {
               </div>
             </div>
           ))}
+          <div style={{"display": "flex",'width': "100%"}}><div style={{'flex': "1","width": "90%"}}><p style={{'color': "red"}}>{p_error}</p></div>
+          <div style={{'flex': "1","width": "90%"}}><p style={{'color': "red"}}>{v_error}</p></div></div>
+        
         </div>
 
         <div
@@ -273,7 +317,7 @@ function Add_pro(props) {
 
         <div className="text-center mt-4">
           <button
-            className="btn btn-info btn-md waves-effect waves-light shadow"
+            className="btn btn-primary btn-md waves-effect waves-light shadow"
             type="submit"
             // onClick={merge_array}
             style={{ display: "block",margin: "auto",fontWeight: "700"  }}

@@ -17,7 +17,7 @@ const SignIn = ({ setIsAuthenticated }) => {
 
 		await localStorage.setItem('@auth_token', JSON.stringify(data.payload));
 		//this is to hide and show content according to admin or user
-		await localStorage.setItem('@type_user', email);
+		await localStorage.setItem('@type_user', JSON.stringify(email));
 		axios.defaults.headers.common['Authorization'] = `Bearer ${data.payload}`;
 		setIsAuthenticated(true);
 		router.push('/');
