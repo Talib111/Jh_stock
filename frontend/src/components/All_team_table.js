@@ -6,10 +6,12 @@ import { Checkbox } from './Checkbox'
 // import { GlobalFilter } from './GolbalFilter'
 import '../Styles/table.css'
 import {RiChatHistoryFill} from 'react-icons/ri'
+import { Redirect } from 'react-router'
 
 
 
-function All_team_table() {
+
+function All_team_table(props) {
   const [product_json, setproduct_json] = useState({"good": "yes"});
   const [all_p_data, setall_p_data] = useState({"empty": "null"})
   const [his, sethis] = useState([{},{}])
@@ -101,8 +103,12 @@ function All_team_table() {
 
     // const { globalFilter} = state
 
+    if (!props.isAuthenticated) {
+      console.log('unauthenticated.............');
+      return <Redirect to='/signin' />;
+    }
 
-    if(loading){
+    else if(loading){
       return(
         <h1>loading....</h1>
       )

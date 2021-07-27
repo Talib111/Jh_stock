@@ -8,12 +8,12 @@ import {CgLogOut} from 'react-icons/cg'
 import {MdDeleteForever} from 'react-icons/md'
 
 
-function Nav(props) {
+function Nav({type_user2}) {
 
   const [vis, setvis] = useState("block");
  
   useEffect(() => {
-    if(props.type_user!='mac52@gmail.com'){
+    if(type_user2!='mac52@gmail.com'){
       setvis("none");
     }
   }, [])

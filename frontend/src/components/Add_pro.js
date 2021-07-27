@@ -7,6 +7,8 @@ import {AiOutlineAppstoreAdd} from 'react-icons/ai'
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
   import ClipLoader from 'react-spinners/ClipLoader';
+import { Redirect } from 'react-router'
+
 
 // //for redux
 // import { connect } from "react-redux";
@@ -209,126 +211,134 @@ function Add_pro(props) {
   }
 
   
-  return (
-    <React.Fragment>
-     <ToastContainer/>
-     <div className="spin" style={{"position": "absolute","top":"50vh","left": "50vw"}}>
-<ClipLoader color={"red"} loading={loader2}   />
-  </div>    
-  <h4 className="mt-3 px-1" style={{"textAlign": "left"}}><AiOutlineAppstoreAdd/> Add Product</h4>
-
-      <form className="mt-1 border shadow-sm py-5" >
-        {/* product selectbox */}
-
-        <div id="all_selectbox">
-          {item_no.map((etm) => (
-            <div
-              className="pro_select"
-              id={"select_" + etm}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "10px",
-              }}
-            >
-              <h5>&nbsp;{etm}&nbsp;</h5>
-              <div style={{ flex: 1 }}>
-                <input
-                 style={{width: "90%"}}
-                  type="text"
-                  list={"pro_name_in"+etm}
-                  id={"product_" + etm}
-                  name={"p_name"+etm}
-                  onChange={select_change_pro}
-                  placeholder="Enter Product"
-
-                  // {...formik.getFieldProps("account_Holder")}
-                />
-                <datalist id={"pro_name_in"+etm}>
-                  <option value="Png">Png</option>
-                  <option value="Pnr">Pnr</option>
-                  <option value="Aj100">Aj100</option>
-                  <option value="NBP">NBP</option>
-                  <option value="HC">HC</option>
-                  <option value="NGT">NGT</option>
-                  <option value="JKN">JKN</option>
-                  <option value="ANANDAM">ANANDAM</option>
-                  <option value="MASIHI_P">MASIHI(P)</option>
-                  <option value="SUGAR_P">SUGAR(P)</option>
-                  <option value="MSG_P">MSG(P)</option>
-                  <option value="MSG_G">MSG(G)</option>
-                  <option value="DAMA_P">DAMA(P)</option>
-                  <option value="KB100">KB100</option>
+  if (!props.isAuthenticated) {
+		console.log('unauthenticated.............');
+		return <Redirect to='/signin' />;
+	}
+  else{
+    return (
+      <React.Fragment>
+       <ToastContainer/>
+       <div className="spin" style={{"position": "absolute","top":"50vh","left": "50vw"}}>
+  <ClipLoader color={"red"} loading={loader2}   />
+    </div>    
+    <h4 className="mt-3 px-1" style={{"textAlign": "left"}}><AiOutlineAppstoreAdd/> Add Product</h4>
+  
+        <form className="mt-1 border shadow-sm py-5" >
+          {/* product selectbox */}
+  
+          <div id="all_selectbox">
+            {item_no.map((etm) => (
+              <div
+                className="pro_select"
+                id={"select_" + etm}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginTop: "10px",
+                }}
+              >
+                <h5>&nbsp;{etm}&nbsp;</h5>
+                <div style={{ flex: 1 }}>
+                  <input
+                   style={{width: "90%"}}
+                    type="text"
+                    list={"pro_name_in"+etm}
+                    id={"product_" + etm}
+                    name={"p_name"+etm}
+                    onChange={select_change_pro}
+                    placeholder="Enter Product"
+  
+                    // {...formik.getFieldProps("account_Holder")}
+                  />
+                  <datalist id={"pro_name_in"+etm}>
+                    <option value="Png">Png</option>
+                    <option value="Pnr">Pnr</option>
+                    <option value="Aj100">Aj100</option>
+                    <option value="NBP">NBP</option>
+                    <option value="HC">HC</option>
+                    <option value="NGT">NGT</option>
+                    <option value="JKN">JKN</option>
+                    <option value="ANANDAM">ANANDAM</option>
+                    <option value="MASIHI_P">MASIHI(P)</option>
+                    <option value="SUGAR_P">SUGAR(P)</option>
+                    <option value="MSG_P">MSG(P)</option>
+                    <option value="MSG_G">MSG(G)</option>
+                    <option value="DAMA_P">DAMA(P)</option>
+                    <option value="KB100">KB100</option>
+                   
+                  </datalist>
                  
-                </datalist>
-               
+                </div>
+  
+                <div style={{ flex: 1 }}>
+                  <input
+                   style={{width: "90%"}}
+                    type="number"
+                    list={"pro_val_in"+etm}
+                    id={"value_" + etm}
+                    name={"P_value"+etm}
+                    onChange={select_change_val}
+                    placeholder="Value"
+  
+                    // {...formik.getFieldProps("account_Holder")}
+                  />
+                  <datalist id={"pro_val_in"+etm}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="8">9</option>
+                    <option value="8">10</option>
+                    <option value="8">11</option>
+                  </datalist>
+                 
+                </div>
               </div>
-
-              <div style={{ flex: 1 }}>
-                <input
-                 style={{width: "90%"}}
-                  type="number"
-                  list={"pro_val_in"+etm}
-                  id={"value_" + etm}
-                  name={"P_value"+etm}
-                  onChange={select_change_val}
-                  placeholder="Value"
-
-                  // {...formik.getFieldProps("account_Holder")}
-                />
-                <datalist id={"pro_val_in"+etm}>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="8">9</option>
-                  <option value="8">10</option>
-                  <option value="8">11</option>
-                </datalist>
-               
-              </div>
-            </div>
-          ))}
-          <div style={{"display": "flex",'width': "100%"}}><div style={{'flex': "1","width": "90%"}}><p style={{'color': "red"}}>{p_error}</p></div>
-          <div style={{'flex': "1","width": "90%"}}><p style={{'color': "red"}}>{v_error}</p></div></div>
-        
-        </div>
-
-        <div
-          onClick={add_item}
-          className="add_item"
-          style={{
-            display: "block",
-            margin: "auto",
-            float: "right",
-            fontSize: "40px",
-            color: "green",
-            cursor: "pointer",
-          }}
-        >
-          +
-        </div>
-
-        <br />
-
-        <div className="text-center mt-4">
-          <button
-            className="btn btn-primary btn-md waves-effect waves-light shadow"
-            type="submit"
-            // onClick={merge_array}
-            style={{ display: "block",margin: "auto",fontWeight: "700"  }}
-            onClick={merge_array}
+            ))}
+            <div style={{"display": "flex",'width': "100%"}}><div style={{'flex': "1","width": "90%"}}><p style={{'color': "red"}}>{p_error}</p></div>
+            <div style={{'flex': "1","width": "90%"}}><p style={{'color': "red"}}>{v_error}</p></div></div>
+          
+          </div>
+  
+          <div
+            onClick={add_item}
+            className="add_item"
+            style={{
+              display: "block",
+              margin: "auto",
+              float: "right",
+              fontSize: "40px",
+              color: "green",
+              cursor: "pointer",
+            }}
           >
-            &nbsp;&nbsp;<AiOutlineAppstoreAdd/> Add Products&nbsp;&nbsp;
-          </button>
-        </div>
-      </form>
-    </React.Fragment>
-  );
+            +
+          </div>
+  
+          <br />
+  
+          <div className="text-center mt-4">
+            <button
+              className="btn btn-primary btn-md waves-effect waves-light shadow"
+              type="submit"
+              // onClick={merge_array}
+              style={{ display: "block",margin: "auto",fontWeight: "700"  }}
+              onClick={merge_array}
+            >
+              &nbsp;&nbsp;<AiOutlineAppstoreAdd/> Add Products&nbsp;&nbsp;
+            </button>
+          </div>
+        </form>
+      </React.Fragment>
+    );
+  }
+  
+  
 }
 
 //  //for redux

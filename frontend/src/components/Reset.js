@@ -7,6 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
   import ClipLoader from 'react-spinners/ClipLoader';
 import {MdDeleteForever} from 'react-icons/md'
+import { Redirect } from 'react-router'
+
 
 
 
@@ -37,17 +39,24 @@ function Reset(props) {
     xhttp.send();
 
   }
-
-  return (
-    <React.Fragment>
-      <ToastContainer/>
-      <div className="spin" style={{"position": "absolute","top":"50vh","left": "50vw"}}>
-<ClipLoader color={"red"} loading={loader2}   />
-  </div>      
-      <h4 className="mt-5">Your Entire data will be deleted</h4>
-      <button className="btn btn-danger mt-2 shadow" onClick={send_to_backend}><MdDeleteForever/> Reset Data</button>
-    </React.Fragment>
-  );
+  
+  if (!props.isAuthenticated) {
+		console.log('unauthenticated.............');
+		return <Redirect to='/signin' />;
+	}
+  else{
+    return (
+      <React.Fragment>
+        <ToastContainer/>
+        <div className="spin" style={{"position": "absolute","top":"50vh","left": "50vw"}}>
+  <ClipLoader color={"red"} loading={loader2}   />
+    </div>      
+        <h4 className="mt-5">Your Entire data will be deleted</h4>
+        <button className="btn btn-danger mt-2 shadow" onClick={send_to_backend}><MdDeleteForever/> Reset Data</button>
+      </React.Fragment>
+    );
+  }
+ 
 }
 
 export default Reset;
